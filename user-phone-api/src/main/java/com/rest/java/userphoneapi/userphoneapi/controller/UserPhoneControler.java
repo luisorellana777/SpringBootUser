@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rest.java.userphoneapi.userphoneapi.Configuration;
 import com.rest.java.userphoneapi.userphoneapi.dto.Phone;
 import com.rest.java.userphoneapi.userphoneapi.dto.User;
 import com.rest.java.userphoneapi.userphoneapi.service.UserPhoneService;
@@ -21,6 +22,9 @@ import com.rest.java.userphoneapi.userphoneapi.service.UserPhoneService;
 @RequestMapping(path = "/user")
 public class UserPhoneControler {
     
+	@Autowired
+	Configuration configurationCC;
+	
 	@Autowired
 	UserPhoneService userPhoneService;
 	
@@ -40,7 +44,7 @@ public class UserPhoneControler {
 
 	@PutMapping(path="/login")
 	public ResponseEntity<String> login(@Valid @RequestParam("email") String email, @Valid @RequestParam("password") String password) {
-	
+	System.out.print(configurationCC.getCc());
 		return this.userPhoneService.login(email, password);
 	}
 	
