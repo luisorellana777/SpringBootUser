@@ -170,5 +170,35 @@ public class User implements java.io.Serializable {
 	protected void onUpdate() {
 		updated = new Date();
 	}
+	
+	public com.rest.java.userphoneapi.userphoneapi.dto.User transformUser(){
+		
+		com.rest.java.userphoneapi.userphoneapi.dto.User user = new com.rest.java.userphoneapi.userphoneapi.dto.User();
+		user.setCreated(this.created);
+		user.setEmail(this.email);
+		user.setId(this.id);
+		user.setIsActive(this.isActive);
+		user.setLastLogin();
+		user.setLastName(this.lastName);
+		user.setName(this.lastName);
+		user.setPassword(this.password);
+		user.setToken(this.token);
+		user.setUpdated(this.updated);
+		
+		List<com.rest.java.userphoneapi.userphoneapi.dto.Phone> phones = new ArrayList<com.rest.java.userphoneapi.userphoneapi.dto.Phone>();
+		this.getPhone().parallelStream().forEach(phone->{
+			com.rest.java.userphoneapi.userphoneapi.dto.Phone phoneModel = new com.rest.java.userphoneapi.userphoneapi.dto.Phone();
+			phoneModel.setCitycode(phone.getCitycode());
+			phoneModel.setContrycode(phone.getContrycode());
+			phoneModel.setId(id);
+			phoneModel.setNumber(phone.getNumber());
+			
+			phones.add(phoneModel);
+    	});
+		user.setPhone(phones);
+		
+		return user;
+	}
+	
 
 }

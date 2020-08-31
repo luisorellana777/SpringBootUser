@@ -2,6 +2,7 @@ package com.rest.java.userphoneapi.userphoneapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import com.rest.java.userphoneapi.userphoneapi.token.JWTAuthorizationFilter;
 
 
 @SpringBootApplication
+@EnableFeignClients
 public class UserPhoneApiApplication {
 
 	public static void main(String[] args) {
@@ -28,9 +30,9 @@ public class UserPhoneApiApplication {
 			http.csrf().disable()
 				.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.authorizeRequests()
-				.antMatchers(HttpMethod.PUT, "/user/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
-				.antMatchers(HttpMethod.GET, "/webjars").permitAll()
+				.antMatchers("/user/login").permitAll()
+				.antMatchers("/swagger-ui.html").permitAll()
+				.antMatchers("/webjars").permitAll()
 				.antMatchers("/v2/api-docs",
                         "/configuration/ui",
                         "/swagger-resources/**",

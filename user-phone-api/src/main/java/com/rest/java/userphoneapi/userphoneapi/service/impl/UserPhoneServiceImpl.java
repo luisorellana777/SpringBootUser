@@ -1,5 +1,6 @@
 package com.rest.java.userphoneapi.userphoneapi.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.rest.java.userphoneapi.userphoneapi.exception.DataIntegrityException;
 import com.rest.java.userphoneapi.userphoneapi.exception.UserNotFoundException;
+import com.rest.java.userphoneapi.userphoneapi.feign.ClientServiceProxy;
 import com.rest.java.userphoneapi.userphoneapi.model.Phone;
 import com.rest.java.userphoneapi.userphoneapi.model.User;
 import com.rest.java.userphoneapi.userphoneapi.repository.PhoneRepository;
@@ -28,6 +30,9 @@ public class UserPhoneServiceImpl implements UserPhoneService {
     
     @Autowired
     private TokenService tokenService;
+    
+    @Autowired
+    private ClientServiceProxy clientServiceProxy;
 
     @Override
     public ResponseEntity<String> createUser(com.rest.java.userphoneapi.userphoneapi.dto.User user) {
@@ -121,9 +126,16 @@ public class UserPhoneServiceImpl implements UserPhoneService {
     public ResponseEntity<Object> getAllUsers() {
     	
     	try {
-    		
-		    return new ResponseEntity<>(
-		    		userRepository.findAll(), 
+    		List<com.rest.java.userphoneapi.userphoneapi.dto.User> usersDto = new ArrayList<com.rest.java.userphoneapi.userphoneapi.dto.User>();
+		    List<User> users = userRepository.findAll();
+		    users.forEach(user -> {
+		    	com.rest.java.userphoneapi.userphoneapi.dto.User userDto = user.transformUser();
+		    	userDto.setClients(clientServiceProxy.getByUserName(user.getName()));
+		    	usersDto.add(userDto);
+		    	
+		    });
+			return new ResponseEntity<>(
+					usersDto, 
 			          HttpStatus.OK);
         
 		}catch(Exception ex){

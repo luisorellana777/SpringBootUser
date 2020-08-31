@@ -2,6 +2,7 @@ package com.rest.java.userphoneapi.userphoneapi.dto;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -34,16 +35,41 @@ public class User implements java.io.Serializable {
 	private Boolean isActive = Boolean.TRUE;
 
 	private String token;
+	
+	private Collection<Client> clients;
 
 	public User() {}
 	
-	public User(String name, String lastName, String email, String password) {
+	public User(Integer id, String name, String lastName,
+			@Pattern(regexp = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-zA-Z]{2,})$", message = "Email Incorrecto") String email,
+			@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$", message = "Password must contains at least one number") String password,
+			Date created, Date updated, Date lastLogin, Boolean isActive, String token, Collection<Client> clients,
+			List<Phone> phone) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.created = created;
+		this.updated = updated;
+		this.lastLogin = lastLogin;
+		this.isActive = isActive;
+		this.token = token;
+		this.clients = clients;
+		this.phone = phone;
 	}
+
+
+	public Collection<Client> getClients() {
+		return clients;
+	}
+
+	public void setClients(Collection<Client> clients) {
+		this.clients = clients;
+	}
+
+
 	private List<Phone> phone = new ArrayList<>();
 
 	@JsonIgnore
