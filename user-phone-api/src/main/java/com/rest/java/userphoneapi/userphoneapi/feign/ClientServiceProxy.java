@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.rest.java.userphoneapi.userphoneapi.dto.Client;
 
-
-@FeignClient(name = "client-api", url="http://localhost:8090")
-//@FeignClient(name = "client-api")
+@FeignClient(name = "client-api")
 public interface ClientServiceProxy {
 	
 	@GetMapping("/client/{userName}")
