@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: user-phone-api
+  cloud:
+    config:
+      name: user-phone
+      uri: http://localhost:8088

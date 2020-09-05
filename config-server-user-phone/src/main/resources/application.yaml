@@ -1,0 +1,11 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: config-server-user-phone
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/luisorellana777/SpringBootUserConfig.git
+            
