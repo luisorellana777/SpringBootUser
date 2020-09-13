@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.rest.java.userphoneapi.userphoneapi.dto.Phone;
 import com.rest.java.userphoneapi.userphoneapi.dto.User;
 import com.rest.java.userphoneapi.userphoneapi.service.UserPhoneService;
@@ -23,8 +24,6 @@ public class UserPhoneControler {
 	
 	@Autowired
 	UserPhoneService userPhoneService;
-	
-		
 		
 	@PostMapping(path="/")
 	public ResponseEntity<String> createUser(@Valid @RequestBody User user)
@@ -33,10 +32,16 @@ public class UserPhoneControler {
 	}
 	
 	@GetMapping(path="/")
-	public ResponseEntity<Object> getAllCourses()
+	@HystrixCommand(fallbackMethod = "fallbackRetrieveUsers")
+	public ResponseEntity<Object> getAllUsers()
 	{
 		return this.userPhoneService.getAllUsers();
 	}
+	
+	public ResponseEntity<Object> fallbackRetrieveUsers()
+	{
+		return this.userPhoneService.fallbackRetrieveUsers();
+	} 
 
 	@PutMapping(path="/login")
 	public ResponseEntity<String> login(@Valid @RequestParam("email") String email, @Valid @RequestParam("password") String password) {

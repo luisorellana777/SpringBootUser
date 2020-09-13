@@ -1,14 +1,14 @@
 package com.rest.java.userphoneapi.userphoneapi.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import com.rest.java.userphoneapi.userphoneapi.exception.DataIntegrityException;
 import com.rest.java.userphoneapi.userphoneapi.exception.UserNotFoundException;
 import com.rest.java.userphoneapi.userphoneapi.feign.ClientServiceProxy;
@@ -242,5 +242,18 @@ public class UserPhoneServiceImpl implements UserPhoneService {
     	
 		}
 
+	}
+
+	@Override
+	public ResponseEntity<Object> fallbackRetrieveUsers() {
+		
+		return new ResponseEntity<>(
+				new com.rest.java.userphoneapi.userphoneapi.dto.Client(
+						"defaultName", 
+						"defaultUserName", 
+						"11111111-1", 
+						1L, 
+						new Date()), 
+		          HttpStatus.PARTIAL_CONTENT);
 	}
 }

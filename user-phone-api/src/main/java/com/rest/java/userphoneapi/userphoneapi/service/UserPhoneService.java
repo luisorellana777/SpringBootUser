@@ -14,6 +14,8 @@ public interface UserPhoneService {
     ResponseEntity<String> login(String email, String password);
     
     ResponseEntity<Object> getAllUsers();
+    
+    ResponseEntity<Object> fallbackRetrieveUsers();
 
     ResponseEntity<String> editUser(User user);
 
