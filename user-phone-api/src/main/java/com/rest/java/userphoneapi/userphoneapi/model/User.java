@@ -1,6 +1,7 @@
 package com.rest.java.userphoneapi.userphoneapi.model;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "user")
@@ -40,14 +44,13 @@ public class User implements java.io.Serializable {
 	@Column(name = "password")
 	private String password;
 
-	@Column(name = "created")
-	private Date created;
+	@CreationTimestamp
+	private LocalDateTime created;
 	
-	@Column(name = "updated", insertable=false, updatable=false)
-	private Date updated;
-	
-	@Column(name = "lastLogin")
-	private Date lastLogin;
+	@UpdateTimestamp
+	private LocalDateTime updated;
+
+	private LocalDateTime lastLogin;
 	
 	@Column(name = "isActive")
 	private Boolean isActive = Boolean.TRUE;
@@ -145,30 +148,16 @@ public class User implements java.io.Serializable {
 		this.token = token;
 	}
 	
-	public void setCreated(Date created) {
+	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setUpdated(LocalDateTime updated) {
 		this.updated = updated;
 	}
 
-	public void setLastLogin(Date lastLogin) {
+	public void setLastLogin(LocalDateTime lastLogin) {
 		this.lastLogin = lastLogin;
-	}
-
-	public void setLastLogin() {
-		this.lastLogin = new Date();
-	}
-
-	@PrePersist
-	protected void onCreate() {
-		created = new Date();
-	}
-
-	@PreUpdate
-	protected void onUpdate() {
-		updated = new Date();
 	}
 	
 	public com.rest.java.userphoneapi.userphoneapi.dto.User transformUser(){

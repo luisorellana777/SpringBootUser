@@ -8,8 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -56,8 +56,8 @@ public class AppTest extends UserPhoneApiApplicationTests {
 		
 		User user = new User("luis", "orellana", "luisss.orellana@mail.com", "Loa33");
 		user.setPhone(phone);
-		user.setUpdated(new Date());
-		user.setLastLogin(new Date());
+		user.setUpdated(LocalDateTime.now());
+		user.setLastLogin(LocalDateTime.now());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String userJson = mapper.writeValueAsString(user);
@@ -88,8 +88,8 @@ public class AppTest extends UserPhoneApiApplicationTests {
 		
 		User user = new User("luis", "orellana", "luis.orellana@mail.com", "Loa35");
 		user.setPhone(phone);
-		user.setUpdated(new Date());
-		user.setLastLogin(new Date());
+		user.setUpdated(LocalDateTime.now());
+		user.setLastLogin(LocalDateTime.now());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String userJson = mapper.writeValueAsString(user);

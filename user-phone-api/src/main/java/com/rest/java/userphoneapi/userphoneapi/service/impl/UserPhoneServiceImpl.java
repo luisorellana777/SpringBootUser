@@ -1,5 +1,6 @@
 package com.rest.java.userphoneapi.userphoneapi.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -155,7 +156,7 @@ public class UserPhoneServiceImpl implements UserPhoneService {
 		    } else {
 		    	
 		    	User user = users.get(0);
-		    	user.setLastLogin();
+		    	user.setLastLogin(LocalDateTime.now());
 		    	String token = tokenService.getJWTToken(user.getEmail());
 		    	user.setToken(token);
 		    	

@@ -1,6 +1,7 @@
 package com.rest.java.userphoneapi.userphoneapi.dto;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -26,11 +27,11 @@ public class User implements java.io.Serializable {
 	@Pattern(regexp="^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$", message="Password must contains at least one number")
 	private String password;
 
-	private Date created;
+	private LocalDateTime created;
 
-	private Date updated;
+	private LocalDateTime updated;
 
-	private Date lastLogin;
+	private LocalDateTime lastLogin;
 
 	private Boolean isActive = Boolean.TRUE;
 
@@ -43,7 +44,7 @@ public class User implements java.io.Serializable {
 	public User(Integer id, String name, String lastName,
 			@Pattern(regexp = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-zA-Z]{2,})$", message = "Email Incorrecto") String email,
 			@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$", message = "Password must contains at least one number") String password,
-			Date created, Date updated, Date lastLogin, Boolean isActive, String token, Collection<Client> clients,
+			LocalDateTime created, LocalDateTime updated, LocalDateTime lastLogin, Boolean isActive, String token, Collection<Client> clients,
 			List<Phone> phone) {
 		super();
 		this.id = id;
@@ -150,29 +151,21 @@ public class User implements java.io.Serializable {
 		this.token = token;
 	}
 	
-	public void setCreated(Date created) {
+	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
 
-	public void setUpdated(Date updated) {
+	public void setUpdated(LocalDateTime updated) {
 		this.updated = updated;
 	}
 
-	public void setLastLogin(Date lastLogin) {
+	public void setLastLogin(LocalDateTime lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 
 	@JsonIgnore
 	public void setLastLogin() {
-		this.lastLogin = new Date();
-	}
-
-	protected void onCreate() {
-		created = new Date();
-	}
-
-	protected void onUpdate() {
-		updated = new Date();
+		this.lastLogin = LocalDateTime.now();
 	}
 	
 	public com.rest.java.userphoneapi.userphoneapi.model.User transformUser(){
@@ -182,7 +175,7 @@ public class User implements java.io.Serializable {
 		user.setEmail(this.email);
 		user.setId(this.id);
 		user.setIsActive(this.isActive);
-		user.setLastLogin();
+		user.setLastLogin(this.lastLogin);
 		user.setLastName(this.lastName);
 		user.setName(this.lastName);
 		user.setPassword(this.password);
